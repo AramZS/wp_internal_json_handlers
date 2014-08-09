@@ -23,6 +23,11 @@ if (!class_exists('ZS_JSON_Workers')){
 			header('Content-Type: application/json');
 		}
 		
+		public function json_page($json){
+			self::header();
+			echo $json;
+		}
+		
 		private function handle($json_result, $error_reporting){
 			if ($error_reporting && !$json_result){
 				return json_last_error_msg();
