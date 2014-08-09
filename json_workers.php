@@ -5,14 +5,14 @@ if (!class_exists('ZS_JSON_Workers')){
 		public static $ver = '1.0.0';
 		
 		public static function init() {
-            static $instance;
+            		static $instance;
+			
+            		if ( ! is_a( $instance, 'ZS_JSON_Workers' ) ) {
+                		$instance = new self();
+            		}
 
-            if ( ! is_a( $instance, 'ZS_JSON_Workers' ) ) {
-                $instance = new self();
-            }
-
-            return $instance;
-        }  
+            		return $instance;
+        	}  
 		
 		public function __construct() {
 			#Stuff
