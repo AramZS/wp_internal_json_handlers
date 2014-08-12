@@ -76,37 +76,31 @@ if (!class_exists('ZS_JSON_Workers')){
 			return $r;
 		}
 
+		private function normalize_post_headers($args, $settings){
+			$default_post_args = array(
+				'method' => 'POST',
+				'timeout' => 45,
+				'redirection' => 5,
+				'httpversion' => '1.0',
+				'blocking' => true,
+				'headers' => array(),
+				'body' => array(),
+				'cookies' => array()
+			);
+			$post_args = wp_parse_args($settings, $default_post_args);
+			$post_args['body'] = self::create($args);
+			return $post_args;
+		}
+
 		private function post_by_post($url, $args, $settings = array()){
-				$default_post_args = array(
-					'method' => 'POST',
-					'timeout' => 45,
-					'redirection' => 5,
-					'httpversion' => '1.0',
-					'blocking' => true,
-					'headers' => array(),
-					'body' => array(),
-					'cookies' => array()
-				);
-				$post_args = wp_parse_args($settings, $default_post_args);
-				$post_args['body'] = self::create($args);
+				$post_args = self::normalize_post_headers($args, $settings);
 				$result = wp_remote_post($url, $post_args);
 				$posted = self::post_returned($result, false);
 				return $posted;
 		}
 
-		private function post_by_other($url, $args, $settings = array()){
-				$default_request_args = array(
-					'method' => 'POST',
-					'timeout' => 45,
-					'redirection' => 5,
-					'httpversion' => '1.0',
-					'blocking' => true,
-					'headers' => array(),
-					'body' => array(),
-					'cookies' => array()
-				);
-				$request_args = wp_parse_args($settings, $default_request_args);
-				$request_args['body'] = self::create($args);
+		private function post_by_other($url, $args = array(), $settings = array()){
+				$request_args =  = self::normalize_post_headers($args, $settings);
 				# wp_safe_remote_request here? https://core.trac.wordpress.org/browser/tags/3.9.2/src/wp-includes/http.php#L0
 				$result = wp_remote_request($url, $request_args);
 				$posted = self::post_returned($result, false);
