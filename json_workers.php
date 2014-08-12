@@ -57,6 +57,9 @@ if (!class_exists('ZS_JSON_Workers')){
 
 		public function post($url, $args = array(), $settings = array(), $use_get = false, $error_reporting = false){
 			if (!$use_get){
+				if (!empty($settings['method']) && ('POST' != $settings['method'])){
+					return self::post_by_other($url, $args, $settings);
+				}
 				return self::post_by_post($url, $args, $settings);
 			} else {
 				return self::post_by_get($url, $args, $settings);
@@ -87,6 +90,25 @@ if (!class_exists('ZS_JSON_Workers')){
 				$post_args = wp_parse_args($settings, $default_post_args);
 				$post_args['body'] = self::create($args);
 				$result = wp_remote_post($url, $post_args);
+				$posted = self::post_returned($result, false);
+				return $posted;
+		}
+
+		private function post_by_other($url, $args, $settings = array()){
+				$default_request_args = array(
+					'method' => 'POST',
+					'timeout' => 45,
+					'redirection' => 5,
+					'httpversion' => '1.0',
+					'blocking' => true,
+					'headers' => array(),
+					'body' => array(),
+					'cookies' => array()
+				);
+				$request_args = wp_parse_args($settings, $default_request_args);
+				$request_args['body'] = self::create($args);
+				# wp_safe_remote_request here? https://core.trac.wordpress.org/browser/tags/3.9.2/src/wp-includes/http.php#L0
+				$result = wp_remote_request($url, $request_args);
 				$posted = self::post_returned($result, false);
 				return $posted;
 		}
