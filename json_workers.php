@@ -100,7 +100,7 @@ if (!class_exists('ZS_JSON_Workers')){
 		}
 
 		private function post_by_other($url, $args = array(), $settings = array()){
-				$request_args =  = self::normalize_post_headers($args, $settings);
+				$request_args = self::normalize_post_headers($args, $settings);
 				# wp_safe_remote_request here? https://core.trac.wordpress.org/browser/tags/3.9.2/src/wp-includes/http.php#L0
 				$result = wp_remote_request($url, $request_args);
 				$posted = self::post_returned($result, false);
