@@ -70,7 +70,7 @@ if (!class_exists('ZS_JSON_Workers')){
 			if (is_wp_error($result)){
 				wp_die($result->get_error_message());
 			} elseif (WP_DEBUG){
-				wp_naytev()->util->logger($result);
+				// @todo Build a logger function here.
 			}
 			$r = $result['body'];
 			return $r;
