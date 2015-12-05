@@ -2,7 +2,7 @@
 if (!class_exists('ZS_JSON_Workers')){
 	class ZS_JSON_Workers {
 
-		public static $ver = '1.0.2';
+		public static $ver = '1.0.3';
 
 		public static function init() {
             		static $instance;
@@ -71,6 +71,7 @@ if (!class_exists('ZS_JSON_Workers')){
 				wp_die($result->get_error_message());
 			} elseif (WP_DEBUG){
 				// @todo Build a logger function here.
+				wp_die(print_r($result, true));
 			}
 			$r = $result['body'];
 			return $r;
