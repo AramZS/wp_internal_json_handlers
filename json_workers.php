@@ -24,7 +24,7 @@ if (!class_exists('ZS_JSON_Workers')){
 		}
 
 		public function json_page($json){
-			self::header();
+			self::head();
 			echo $json;
 		}
 
@@ -41,7 +41,7 @@ if (!class_exists('ZS_JSON_Workers')){
 		}
 
 		public function create_the($args, $error_reporting = false){
-			echo self::to($args, $error_reporting);
+			echo self::create($args, $error_reporting);
 			return;
 		}
 
