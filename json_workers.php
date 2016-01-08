@@ -20,7 +20,7 @@ if (!class_exists('ZS_JSON_Workers')){
 		}
 
 		public function head(){
-			header('Content-Type: application/json');
+			#header('Content-Type: application/json');
 		}
 
 		public function json_page($json){
@@ -84,11 +84,21 @@ if (!class_exists('ZS_JSON_Workers')){
 				'redirection' => 5,
 				'httpversion' => '1.0',
 				'blocking' => true,
-				'headers' => array(),
+				'headers' => array(
+					'Content-Type'	=> 'application/json'
+				),
 				'body' => array(),
 				'cookies' => array()
 			);
+			if (array_key_exists('headers', $settings)){
+				$headers = array_merge($default_post_args['headers'], $settings['headers']);
+			} else {
+				$headers = array(
+					'Content-Type'	=> 'application/json'
+				);
+			}
 			$post_args = wp_parse_args($settings, $default_post_args);
+			$post_args['headers'] = $headers;
 			$post_args['body'] = $this->create($args);
 			return $post_args;
 		}
