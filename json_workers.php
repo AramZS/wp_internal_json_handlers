@@ -173,7 +173,6 @@ if (!class_exists('ZS_JSON_Workers')){
 			if ($err_no == 0) {
 				return json_decode($response);
 			} else {
-				salon_sane()->slnm_log("Error #" . $err_no . ": " . $err_msg);
 				return "Error #" . $err_no . ": " . $err_msg;
 			}
 		}
