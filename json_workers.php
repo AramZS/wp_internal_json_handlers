@@ -2,7 +2,7 @@
 if (!class_exists('ZS_JSON_Workers')){
 	class ZS_JSON_Workers {
 
-		public static $ver = '1.0.3';
+		public static $ver = '1.0.5';
 
 		public static function init() {
             		static $instance;
