@@ -36,7 +36,11 @@ if (!class_exists('ZS_JSON_Workers')){
 		}
 
 		public function create($args, $error_reporting = false){
-			$json = json_encode($args);
+			if ( empty( $args ) ){
+				$json = "{}";
+			} else {
+				$json = json_encode($args);
+			}
 			return $this->handle($json, $error_reporting);
 		}
 
